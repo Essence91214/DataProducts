@@ -1,0 +1,104 @@
+---
+title       : BuyDiamonds- App Provided by Diamond Merchants
+subtitle    : "Enhancing Diamond-Shopping Experience"
+author      : Essence91214
+job         : 
+framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
+highlighter : highlight.js  # {highlight.js, prettify, highlight}
+hitheme     : tomorrow      # 
+widgets     : []            # {mathjax, quiz, bootstrap}
+mode        : selfcontained # {standalone, draft}
+knit        : slidify::knit2slides
+---
+
+## What is BuyDiamonds?
+
+* It is a prototype of an application  to be used by diamond merchants and jewellers
+
+* to enhance the shopping experience of diamond shoppers by enabling them to get the best value for their money  
+
+* BuyDiamonds uses the 'diamonds' dataset from 'ggplot2' as the prototype dataset.
+
+## Why use an app like BuyDiamonds?
+
+* __Because diamond-shopping is difficult__. People buy diamonds for jewellry and/or for diversifying their investments. Accordingly, the criterion for selecting a diamond for purchase could be different, e.g., significant factors for jewellry diamonds could be the sparkle and fancy shapes, whereas for investment purposes,  one might look for large sized clear diamonds of round shape. Since there are many factors to be considered, it is not easy to shop for diamonds.
+
+* BuyDiamonds is meant to help shoppers get the best value for their money by showing them all their options at the outset.  
+
+--- .class #id 
+
+
+## What are the inputs and outputs of BuyDiamonds?
+
+##### Input: 
+Using BuyDiamonds the shopper can specify whether they need a solitaire diamond or multiples, their budget, range of diamond sizes, and quality of cuts. 
+
+##### Output: 
+A list of diamonds available at this particular merchant having the specifications provided by you. And if you specified that you are interested in multiple diamonds, it provides two additional pieces of information: for each diamond in the list, it provides the number of diamonds of that kind you can purchase within your budget and the combined price. In response the app displays a list of diamonds  they can choose from in that particular store.  
+
+##### Possible helpful action
+If the merchants have labelled and stored the diamonds in their stock in an orderly fashion, they can now locate the diamonds of interest for the shopper and show it to them if need be.
+  
+
+--- .class #id 
+
+
+##### Illustration 
+Consider Shiny, a shopper with budget of $5,000 to $20,000, looking for multiple diamonds of the same type and of size in the rqange of 0.2 to 1.4 carats with clarity level "Ideal".  
+
+```{r echo = FALSE, results='markup', warning = FALSE, message = FALSE, cache = TRUE }
+library(devtools)
+install_github('pander', 'Rapporter')
+library(pander)
+newdiamonds <- read.csv("http://vincentarelbundock.github.io/Rdatasets/csv/ggplot2/diamonds.csv", header = TRUE)
+SubsetDiamonds <- newdiamonds[ ,c("carat", "cut", "clarity", "color", "price")]
+Rows <- dim(SubsetDiamonds)[1]
+newRow <- sample(Rows, size = 1000)
+SubsetDiamonds <- SubsetDiamonds[newRow, ]
+      budget1 <- 5000
+      budget2 <- 20000
+      size1 <- 0.2
+      size2 <- 1.4
+      number <- "Multiple"
+      cut <- c("Ideal")
+    
+      #Picking just the diamonds that fit the buyers specification
+      NewMatrix <- SubsetDiamonds[SubsetDiamonds$price >= budget1, ]
+      NewMatrix <- NewMatrix[NewMatrix$price <= budget2, ]
+      NewMatrix <- NewMatrix[NewMatrix$carat >= (size1), ]
+      NewMatrix <- NewMatrix[NewMatrix$carat <= (size2), ]
+      NewMatrix <- NewMatrix[NewMatrix$cut %in% cut, ]
+      if (number == "Multiple") { 
+        NewMatrix$num_of_diamonds <- as.integer(floor(budget2/NewMatrix$price)) 
+        NewMatrix$combined_price <- as.integer(floor(budget2/NewMatrix$price)*NewMatrix$price)
+      }
+      Rows1 <- dim(NewMatrix)[1]
+      rownames(NewMatrix) <- 1:Rows1
+      newrow <- sample(Rows1, size = 10)
+      NewMatrix <- NewMatrix[newrow, ]
+      pander(NewMatrix[1:10, 1:7], style = 'rmarkdown',split.table = Inf ) 
+
+```
+This shows 10 randomly selected rows of the `r Rows1` in the output table. 
+
+
+--- .class #id 
+
+### What other information can be included in the App?
+
+This protptype app has only two of the four factors important for choosing diamonds -"The Four C's" (Carat, Color, Clarity, and Cut). Thus, a complete app needs to include:
+
+* Color, Clarity, Shape, Visible tint.
+
+## Enjoy your diamond-shopping experience!
+<div style='text-align: center;'>
+    <img height='240' width ='460' src='diamonds.png' />
+</div>
+
+(Image source: http://videohive.net/item/falling-diamonds-4-different-overlays/156459),
+          
+
+
+
+
+
