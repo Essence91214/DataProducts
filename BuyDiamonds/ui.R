@@ -6,7 +6,7 @@ shinyUI(fluidPage(
           h3("Description"), 
           "This is a prototype application of a service that can be used by  
           diamond merchants to display to their diamond shoppers a list of 
-          available choices at their store,  given the shoppers budget.", 
+          available choices at their store,  customized to the shoppers needs and budget.", 
            br(),
           h3("How to use BuyDiamonds"), 
           h5("Input"),
@@ -16,16 +16,16 @@ shinyUI(fluidPage(
           tags$li("whether you are interested in just one (solitaire) diamond or multiple diamonds,"),  
           tags$li("a range  for your 'shopping budget',") ,
           tags$li("a range for the 'size of diamonds', and"), 
-          tags$li("clarity of diamonds.") 
+          tags$li("cut of diamonds.") 
           ),
           "The shopping budget is the amount of money you have set aside for this purchase.",  
           br(),
           h5("Output of the app"), 
-          "The app displays a list of diamonds available at this particular merchant having the
-          specifications provided by you.",
+          "As per the budget and other specifications provided by you, the app computes a subset of the diamonds in the 
+          store and displays it.",
           br(),
-          " If you specify that you are interested in multiple 
-          diamonds then for each diamond in the list it provides two additional pieces of information:",
+          "If you specified that you are interested in multiple 
+          diamonds then for each diamond in the list, it provides two additional pieces of information:",
           tags$ul(
           tags$li("the number of diamonds of that kind you can purchase within your budget, and"),
           tags$li("the combined price.")   
